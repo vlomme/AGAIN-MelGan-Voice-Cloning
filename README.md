@@ -21,7 +21,7 @@
 Запустите `python melgan.py -r t -f mel`
 
 ### Использование
-Запустите `python melgan.py -r g -f wav` для файлов в wav
+Запустите `python melgan.py -r g -f wav` для файлов в wav из которого будет считаться мелспектр
 
 Или запустите `python melgan.py -r g -f mel` для файлов в mel, в нужном формате
 
