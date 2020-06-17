@@ -2,7 +2,7 @@ import librosa
 import numpy as np
 
 class Hparams:
-    mel_checkpoint = './logs/mel_ckpt_13k.pt' # Претренированная melgan модель
+    mel_checkpoint = './logs/mel_ckpt_51k.pt' # Претренированная melgan модель
     wav_checkpoint = "./logs/wav_ckpt_27k.pt" # Претренированная wavgan модель
     
     data_dir = './data' # Путь к звуковым файлам для тренировки
