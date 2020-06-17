@@ -2,8 +2,7 @@
 Неофициальная реализация [MelGAN](https://arxiv.org/abs/1910.06711)
 ![Иллюстрация к проекту](https://github.com/vlomme/MelGan-WavGan/blob/master/scheme.png)
 
-## Пример использования на [Сolab](https://colab.research.google.com/github/vlomme/MelGan-WavGan/blob/master/MELGAN.ipynb)
-
+## Пример использования на [Сolab](https://colab.research.google.com/github/vlomme/MelGan-WavGan/blob/master/MELGAN.ipynb). Предобученные [веса](https://drive.google.com/uc?id=10tLduS5fGNWby7IKvfltuIfUWUeAp9SM) многоголосой модели 
 ## Использование
 ### Настройки
 Отредактируйте hparams.py
@@ -28,7 +27,7 @@
 # WavGAN
 Моя сеть. На вход принимает сгенерированный Гриффин лим звук и пытается его подправить. Архитектура генератора похожа на U-net, а дискриминатор взят из MelGAN
 
-## Пример использования на [Сolab](https://colab.research.google.com/github/vlomme/MelGan-WavGan/blob/master/MELGAN.ipynb)
+## Пример использования на [Сolab](https://colab.research.google.com/github/vlomme/MelGan-WavGan/blob/master/MELGAN.ipynb). Предобученные [веса](https://drive.google.com/uc?id=10tLduS5fGNWby7IKvfltuIfUWUeAp9SM) многоголосой модели 
 
 ## Использование
 ### Настройки
