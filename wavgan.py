@@ -1,7 +1,7 @@
 import argparse, os, glob, time, sys, librosa, torch
 from tqdm import tqdm
 from utils import  preprocess, process_audio, WavGanDataset, my_griffin_lim
-from utils import GeneratorWav, MultiScale
+from models import GeneratorWav, MultiScale
 import numpy as np
 import soundfile as sf
 

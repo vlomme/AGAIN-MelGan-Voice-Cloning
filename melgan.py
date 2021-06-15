@@ -1,7 +1,7 @@
 import argparse, os, glob, time, librosa, torch
 from tqdm import tqdm
 from utils import  preprocess, process_audio, MelGanDataset
-from utils import GeneratorMel, MultiScale
+from models import GeneratorMel, MultiScale
 import numpy as np
 import soundfile as sf
 
@@ -43,7 +43,7 @@ def generate(format_wav):
         # Загружаем Мелспектр, или получаем его из звука
         if format_wav:
             # Получаем Мелспектр из аудио
-            mel = process_audio(test_path, it_audio = False)
+            mel = 10**process_audio(test_path, it_audio = False)
         else:
             # Загружаем Мелспектр
             mel = torch.load(test_path).unsqueeze(0)  
@@ -72,7 +72,7 @@ def train():
     train_loader = DataLoader(trainset, batch_size=hp.batch_size, shuffle=True, drop_last=True)
 
     # Загрузить тестовый датасет
-    test_mels = glob.glob(os.path.join(hp.test_dir, '*.wav'))
+    test_mels = glob.glob(os.path.join(hp.eval_dir, '*.wav'))[:3]
     testset = [process_audio(test_mel, it_audio = False) for test_mel in test_mels]
     
     # создать Generator и 3*Discriminator
@@ -83,7 +83,7 @@ def train():
 
     # Загружаем модель
     step, epochs = 0, 0
-    if hp.mel_checkpoint is not None:
+    if hp.mel_checkpoint != '':
         print("Загрузка чекпоинтов")
         ckpt = torch.load(hp.mel_checkpoint)
         G.load_state_dict(ckpt['G'])
@@ -109,8 +109,6 @@ def train():
             fake_audio = G(mel)
             # Получаем отклик на созданное аудио без градиентов 3*7*16*16*8192(4096,2048)
             d_fake_detach = D(fake_audio.cuda().detach())
-            # Получаем отклик на созданное аудио
-            d_fake = D(fake_audio.cuda())
             # Получаем отклик на реальное аудио
             d_real = D(audio)    
 
@@ -134,6 +132,10 @@ def train():
             d_optimizer.step()
 
             # ---------------Генератор----------------------
+                     
+            # Получаем отклик на созданное аудио
+            d_fake = D(fake_audio.cuda())     
+            
             # Считаем ошибку на отклик созданного сигнала с градиентом
             g_loss = 0
             for scale in d_fake:
@@ -170,7 +172,7 @@ def train():
                     'd_optimizer': d_optimizer.state_dict(),
                     'step': step,
                     'epoch': epoch,
-                }, save_dir +'/mel_ckpt_%dk.pt' % (step // 10000))
+                }, save_dir +'/mel_ckpt_%dk.pt' % (step // 1000))
                 
                 if testset:
                     print("Синтезируем тестовые файлы")
